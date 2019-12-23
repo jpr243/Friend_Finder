@@ -3,7 +3,7 @@
 // Linking the routes to the arrays of information on friends.
 // ===============================================================================
 
-var friends = require("../data/friends.js");
+var friends = require("../app/data/friends.js");
 
 // ===============================================================================
 // ROUTING
@@ -39,7 +39,7 @@ module.exports = function(app) {
     var userName = userData.name;
     var userScores = userData.scores;
 
-    var b = userScores.map(function(item){
+    var b = userScores.map(function(item) {
       return parseInt(item, 10);
     });
     userData = {
@@ -56,42 +56,28 @@ module.exports = function(app) {
     console.log("Best match friend diff " + bestMatch.friendDifference);
     console.log("=====================================================");
 
-    for(var i = 0; i < friends.length; i++) {
-        console.log(friends[i].name);
-        totalDifference = 0;
-        console.log ("Total Diff " + totalDifference);
-        console.log("Best match friend diff " + bestMatch.friendDifference);
+    for (var i = 0; i < friends.length; i++) {
+      console.log(friends[i].name);
+      totalDifference = 0;
+      console.log("Total Diff " + totalDifference);
+      console.log("Best match friend diff " + bestMatch.friendDifference);
 
-        var bfriendScore = friends[i].scores.reduce((a,b) => a + b, 0);
-        console.log("Total friend score " + bfriendScore);
-        totalDifference += Math.abs(sum - bfriendScore);
-        console.log("----------------> " + totalDifference);
+      var bfriendScore = friends[i].scores.reduce((a, b) => a + b, 0);
+      console.log("Total friend score " + bfriendScore);
+      totalDifference += Math.abs(sum - bfriendScore);
+      console.log("----------------> " + totalDifference);
 
-        if(totalDifference <= bestMatch.friendDifference) {
-          bestMatch.name = friends[i].name;
-          bestMatch.photo = friends[i].photo;
-          bestMatch.friendDifference = totalDifference;
-        }
-        console.log(totalDifference + " Total Difference");
+      if (totalDifference <= bestMatch.friendDifference) {
+        bestMatch.name = friends[i].name;
+        bestMatch.photo = friends[i].photo;
+        bestMatch.friendDifference = totalDifference;
+      }
+      console.log(totalDifference + " Total Difference");
     }
     console.log(bestMatch);
     friends.push(userData);
     console.log("New User added");
     console.log(userData);
     res.json(bestMatch);
-  });
-};
-    
-
-  // ---------------------------------------------------------------------------
-  // I added this below code so you could clear out the table while working with the functionality.
-  // Don"t worry about it!
-
-  app.post("/api/clear", function(req, res) {
-    // Empty out the arrays of data
-    tableData.length = 0;
-    waitListData.length = 0;
-
-    res.json({ ok: true });
   });
 };
