@@ -1,88 +1,56 @@
-// ===============================================================================
-// LOAD DATA
-// Linking the routes to the arrays of information on friends.
-// ===============================================================================
+//Pull in required dependencies
+var path = require("path");
 
+//Import the list of friend entries
 var friends = require("../data/friends.js");
 
-// ===============================================================================
-// ROUTING
-// ===============================================================================
-
+//Export API routes
 module.exports = function(app) {
-  // API GET Requests
-  // Below code handles when users "visit" a page.
-  // In each of the below cases when a user visits a link
-  // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
-  // ---------------------------------------------------------------------------
-
+  //Total list of friend entries
   app.get("/api/friends", function(req, res) {
     res.json(friends);
   });
 
-  // API POST Requests
-  // Below code handles when a user submits a form and thus submits data to the server.
-  // When a user submits form data (a JSON object)
-  // ...the JSON is pushed to the appropriate JavaScript array
-  // Then the server saves the data to the userData array)
-  // ---------------------------------------------------------------------------
-
+  //Add new friend entry
   app.post("/api/friends", function(req, res) {
-    var totalDifference = 0;
+    //Capture the user input object
+    var userInput = req.body;
 
-    var bestMatch = {
-      name: "",
-      photo: "",
-      friendDifference: 100
-    };
+    var userResponses = userInput.scores;
 
-    var userData = req.body;
-    var userName = userData.name;
-    var userScores = userData.scores;
+    //Compute best friend match
+    var matchName = "";
+    var matchImage = "";
+    var totalDifference = 1000; //Make the initial value big for comparison
 
-    var b = userScores.map(function(item) {
-      return parseInt(item, 10);
-    });
-    userData = {
-      name: req.body.name,
-      photo: req.body.photo,
-      scores: b
-    };
-
-    console.log("name" + userName);
-    console.log("User score" + userScores);
-
-    var sum = b.reduce((a, b) => a + b, 0);
-    console.log("Sum of users score " + sum);
-    console.log("Best match friend diff " + bestMatch.friendDifference);
-    console.log("=====================================================");
-
+    //Check all existing friends in the list
     for (var i = 0; i < friends.length; i++) {
-      console.log(friends[i].name);
-      totalDifference = 0;
-      console.log("Total Diff " + totalDifference);
-      console.log("Best match friend diff " + bestMatch.friendDifference);
+      // console.log("friends = "" + JSON.stringify(friends[i]));
 
-      var bfriendScore = friends[i].scores.reduce((a, b) => a + b, 0);
-      console.log("Total friend score " + bfriendScore);
-      totalDifference += Math.abs(sum - bfriendScore);
-      console.log("----------------> " + totalDifference);
-
-      if (totalDifference <= bestMatch.friendDifference) {
-        bestMatch.name = friends[i].name;
-        bestMatch.photo = friends[i].photo;
-        bestMatch.friendDifference = totalDifference;
+      //Compute differences for each question
+      var difference = 0;
+      for (var j = 0; j < userResponses.length; j++) {
+        difference += Math.abs(friends[i].scores[j] - userResponses[j]);
       }
-      console.log(totalDifference + " Total Difference");
-    }
-    console.log(bestMatch);
+      //console.log("difference = " + difference);
 
+      //If lowest difference, record the friend match
+      if (difference < totalDifference) {
+        //console.log("Closest match found =" + difference);
+        //console.log("Friend name = " + friends[i].name);
+        //console.log("Friend image = " + friends[i].photo);
+
+        totalDifference = difference;
+        matchName = friends[i].name;
+        matchImage = friends[i].photo;
+      }
+    }
     //after finding match, add user to friend array
-    friends.push(userData);
-    console.log("New User added");
-    console.log(userData);
+    friends.push(userInput);
+    //console.log("New User added");
+    //console.log(userInput);
 
     //send back to browser the best friend match
-    res.json(bestMatch);
+    res.json({ status: "OK", matchName: matchName, matchImage: matchImage });
   });
 };
