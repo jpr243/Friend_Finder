@@ -7,34 +7,51 @@
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background-color: navy;
+        }
+
+        #link {
+            color: white;
+            padding: 100px;
+        }
+
+        .container {
+            color: navy;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </head>
 
 <body>
-    <div class="container">
-        <div class="jumbotron">
-            <div class="Mntitle">
-                <h1>Friend Finder</h1>
-            </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="mnTitle">Friend Finder</h1>
             <hr />
-            <h2 class="Mntitle">Answer a few basic questions.</h2>
-            <h2 class="Mntitle">
-                Then find the friend with the greatest compatibility!
-            </h2>
+            <h3>Answer a few basic questions.</h3>
+            <br>
+            <h4>Then find the friend with the greatest compatibility!</h4>
             <br />
-            <div class="">
-                <a href="survey.html">
-                    <button type="button" class="btn btn-lg btn-primary">
-                        <h4>
-                            <span class="glyphicon glyphicon-list-alt"></span>Go to Survey
-                        </h4>
-                    </button>
-                </a>
-            </div>
-            <div><a href="/app/data/friends.js">API list</a></div>
+            <a href="survey.html">
+                <button type="button" class="btn btn-lg btn-primary">
+                    <h4>
+                        <i class="glyphicon glyphicon-list-alt"></i> Go to Survey
+                    </h4>
+                </button>
+            </a>
         </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container"></div>
+
+        <p><a href="/api/friends" id="link">API Friends List</a> |
+            <a href="https://github.com/jpr243/Friend_Finder" id="link">GitHub Repo</a>
+        </p>
+    </footer>
     </div>
 </body>
 
