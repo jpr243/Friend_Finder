@@ -127,7 +127,7 @@
     <h3><strong>Question 10</strong></h3>
     <h4>You feel more energetic after spending time with a group of people.</h4>
     <select data-placeholder="" class="chosen-select" id="q10">
-      <option value="1"></option>1 (Strongly Disagree)</option>
+      <option value="1">1 (Strongly Disagree)</option>
       <option value="2" selected>2</option>
       <option value="3">3</option>
       <option value="4">4</option>
@@ -137,8 +137,8 @@
     <br />
     <br />
 
-    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
-      <i class="fa fa-check-circle" aira-hidden="true"></i> Submit
+    <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block">
+      <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
     </button>
     <br />
     <br />
@@ -170,9 +170,10 @@
     </div>
   </div>
 
-  <!--Javascript-->
+  <!--Form validation-->
   <script type="text/javascript">
-    $("#submit").on("click", function () {
+    $("#submit").on("click", function (event) {
+      event.preventDefault();
       function validateForm() {
         var isValid = true;
         $(".form-control").each(function () {
@@ -183,10 +184,10 @@
         });
         return isValid;
       }
-      if (validateForm() === true) {
+      if (validateForm() == true) {
         var userData = {
-          name: $("#name").val(),
-          photo: $("#photo").val(),
+          name: $("#name").val().trim,
+          photo: $("#photo").val().trim,
           scores: [
             $("q1").val(),
             $("q2").val(),
@@ -201,15 +202,16 @@
           ]
         };
         var currentURL = window.location.origin;
-
         $.post(currentURL + "/api/friends", userData, function (data) {
           $("#matchName").text(data.name);
           $("#matchImg").att("src", data.photo);
+
           $("#resultsModal").modal("toggle");
-        })
+        });
       } else {
         alert("Please fill out all fields before submitting!")
       }
+      return false;
     });
   </script>
 </body>

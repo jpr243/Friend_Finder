@@ -3,7 +3,7 @@
 // Linking the routes to the arrays of information on friends.
 // ===============================================================================
 
-var friends = require("../app/data/friends.js");
+var friends = require("../data/friends.js");
 
 // ===============================================================================
 // ROUTING
@@ -29,10 +29,11 @@ module.exports = function(app) {
 
   app.post("/api/friends", function(req, res) {
     var totalDifference = 0;
+
     var bestMatch = {
       name: "",
       photo: "",
-      friendDifference: 1000
+      friendDifference: 100
     };
 
     var userData = req.body;
@@ -75,9 +76,13 @@ module.exports = function(app) {
       console.log(totalDifference + " Total Difference");
     }
     console.log(bestMatch);
+
+    //after finding match, add user to friend array
     friends.push(userData);
     console.log("New User added");
     console.log(userData);
+
+    //send back to browser the best friend match
     res.json(bestMatch);
   });
 };
