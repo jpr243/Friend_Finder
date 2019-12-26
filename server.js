@@ -1,4 +1,4 @@
-// Dependencies
+// Pull in required Dependencies
 // =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
+//Allows use of static files
 app.use(express.static("app/public"));
 
 // ================================================================================
@@ -24,7 +25,6 @@ app.use(express.static("app/public"));
 // The below points our server to a series of "route" files.
 // These routes give our server a "map" of how to respond when users visit or request data from various URLs.
 // ================================================================================
-
 require("./app/routing/apiRoutes.js")(app);
 require("./app/routing/htmlRoutes.js")(app);
 
@@ -34,5 +34,5 @@ require("./app/routing/htmlRoutes.js")(app);
 // =============================================================================
 
 app.listen(PORT, function() {
-  console.log("App listening on PORT: " + PORT);
+  console.log("Friend finder app is listening on PORT: " + PORT);
 });
