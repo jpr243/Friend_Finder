@@ -1,18 +1,18 @@
 # Friend_Finder
 
-##Introduction
+## Introduction
 
 In this activity, I built a compatibility-based "FriendFinder" application using famous movie stars. This full-stack site takes in results from the users' surveys, then compares their answers with those from other users. The app will then display the name and picture of the user with the best overall match.
 
-##Live Link
+## Live Link
 
 https://friendfinderjr.herokuapp.com/
 
-##How to Use
+## How to Use
 
 Go to the live link and take the Friend Finder Survey.  Immediately after submitting the survey, your perfect friend will pop up.  There is also an API you can access to the friends on the network and their personalised information.
 
-##Details of Requirements
+## Details of Requirements
 
 -  The survey has 10 questions. Each answer is on a scale of 1 to 5 based on how much the user agrees or disagrees with a question.
 -  NPM packages used include Express, Path and Body-Parser.
